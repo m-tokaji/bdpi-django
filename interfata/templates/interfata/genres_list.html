@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Baza de date carti</title>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/c
+ss/bootstrap.min.css"
+integrity="sha384-
+QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
+IH"
+crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<!-- Brand -->
+<a class="navbar-brand" href="{% url 'book-list'%}">Baza de date carti</a>
+<!-- Toggler/collapsibe Button -->
+<button class="navbar-toggler" type="button" datatoggle="
+collapse"
+data-target="#collapsibleNavbar">
+<span class="navbar-toggler-icon"></span>
+</button>
+<!-- Navbar links -->
+<div class="collapse navbar-collapse"
+id="collapsibleNavbar">
+</div>
+</nav>
+<div class="container">
+<div class="row">
+<h1>Afisare genuri</h1>
+</div>
+<div class="row">
+<div class="col-lg-3">
+<a href="{% url 'genre-add' %}" class="btn
+btn-primary btn-sm mb-3">
+Adauga gen</a>
+</div>
+</div>
+<table class="table table-striped table-bordered">
+<thead class="table-dark">
+<tr>
+<th>id_gen</th>
+<th>nume gen</th>
+<th>carti</th>
+</tr>
+</thead>
+<tbody>
+{% for gen in object_list %}
+<tr>
+<td> {{gen.id}} </td>
+<td> {{gen.genre_name}} </td>
+<td>    
+        <ul>
+          {% for carte in gen.books.all %}
+
+                <li>{{ carte.book_name }}</li>
+
+          {% endfor %}      
+        </ul>
+</td>
+<td><form method="post" action="{% url 'genre-delete' gen.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-sm">Sterge</button>
+</form>
+
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</body>
+</html>

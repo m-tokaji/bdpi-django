@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Baza de date carti</title>
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/c
+ss/bootstrap.min.css"
+integrity="sha384-
+QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEw
+IH"
+crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+<!-- Brand -->
+<a class="navbar-brand" href="#">Baza de date carti</a>
+<!-- Toggler/collapsibe Button -->
+<button class="navbar-toggler" type="button" datatoggle="
+collapse"
+data-target="#collapsibleNavbar">
+<span class="navbar-toggler-icon"></span>
+</button>
+<!-- Navbar links -->
+<div class="collapse navbar-collapse"
+id="collapsibleNavbar">
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link"
+href="{% url 'genres-list' %}">Genuri</a>
+</li>
+</ul>
+</div>
+</nav>
+<div class="container">
+<div class="row">
+<h1>Afisare carti</h1>
+</div>
+<div class="row">
+<div class="col-lg-3">
+<a href="{% url 'book-add' %}" class="btn
+btn-primary btn-sm mb-3">
+Adauga carte</a>
+</div>
+</div>
+<table class="table table-striped table-bordered">
+<thead class="table-dark">
+<tr>
+<th>idcarte</th>
+<th>titlu</th>
+<th>autor</th>
+<th>an_lansare</th>
+<th>genuri</th>
+</tr>
+</thead>
+<tbody>
+{% for carte in object_list %}
+<tr>
+    <td> {{ carte.id }} </td>
+    <td> {{ carte.book_name }} </td>
+    <td> {{ carte.author }} </td>
+    <td> {{ carte.release_date }} </td>
+    <td>
+        <ul>
+            {% for gen in carte.genres.all %}
+                <li> {{ gen.genre_name }} </li>
+            {% endfor %}
+        </ul>
+    </td>
+
+<td><a
+href="{% url 'book-edit' carte.id %}"
+class="btn btnprimary">
+Modifica</a> 
+<form method="post" action="{% url 'book-delete' carte.pk %}" style="display:inline;">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger btn-sm">Sterge</button>
+</form>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</body>
+</html>
